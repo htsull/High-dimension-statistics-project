@@ -1,2 +1,20 @@
-# High-dimension-statistics-project
+# Summary
+
+The problem we are approching in this report is to perform a dimension reduction on the `red wine` dataset and to build a model with the features selected. In this report we have as objective to find if the dimension reduction is a way to improve models performances. The idea is to use several techniques to select the most important features in order to build a prediction model. The solution we implemented is based on three techniques largely popular among the data science community to select features. In order to conclude on our work we proceed as the following :
+
+- We load and clean the dataset
+    - We verified and remove all the rows with missing values and outliers because that can introduce some noise in the data and hurt the performance of the model.
+    - We remove all duplicated rows in the dataset (240 in total).
+- We perform a base `logistic regression (logreg)` model as a benchmark in order to make the comparison between the diferents dimension reduction techniques that we'll use. `logreg` is specified, tuned and trained with all of the features (11 in our case) and the accuracy and AUC metrics were use to evaluate its performance.
+- We perform the dimension reduction using three methods : `Lasso regression (lasso)`, `Gradient bossting (GB)` and `Principal Component Analysis (PCA)` and with each methods we perform the same `logreg` on the features selected by these methods and make the comparison with the base `logreg` model in order to draw a conclusion as whether the reduction of features increase or decrease the performance of the model.
+- Given that the target distribution isn't balanced `(Bad : 86%, Good : 14%)`, the accuracy only isn't a reliable metric to evaluate the performance of the model. We decided to use a combination of the `accuracy`, the `area under the curve (AUC)` metrics and the `confusion matrix` to make this evaluation of performance.
+
+As results, we found that the three methods `(Lasso, Gradient Boosting, Principal Components Analysis)` that we used have the same power of prediction `(AUC = 0.89)` as the `base logistic model (logreg)` performed as a benchmark to compare the models performances. Given that we know about the distribution of the target `(quality)` we can easily say that in this case the differences between the three methods is more reflated in the accuracy metric and the confusion matrix (because they have the same power of prediction `AUC = 0.89`) so we have to break it down to have a better understanding of the matter :
+- For the Lasso method, the quality of the model is improved as the accuracy comparison proves it : `88.7% for logreg versus 89.5% for lasso`. The confusion matrix shows also that we have an `precision of 70%` in the prediction of the minority class. This method dropped the features : `('free sulfur dioxide'` and `'pH')`.
+- We can make the same conclusion as before for the Gradient Boosting (GB) strategy because the accuracy is improved : `88.7% for logreg versus 89.0% for GB` and this method dropped `'residual sugar'` and `pH`. As for the confusion matrix, we have seen that it presents a `precision of 65.5%` in predicting the minority class.
+- As for the Pricipal Components Analysis (PCA), the accuracy slightly dropped : `88.7% for logreg versus 88.5% for PCA`. We also conclude with this strategy specifies that nine components is enough to capture the essence of the information contained in the original dataset and this method  we have `60% precision` in the prediction of the minority class.
+
+So with all the results that we have, we can confidently conclude that the dimension reduction that have the benefit to reduce computing time is a great solution in order to improve the models performances. Even if in our case we are not really in high dimension data, these methods prove that they are great help in apraoching the dimension problem and reduce the complexity of the models.
+
+An interesting case that we have not explored and considered as a limit in this report is the difference between the `Lasso` and `GB` methods for the features dropped by them. An explaination for this difference is a case to explore in perpective to be more accurate in the understanding of these methods for features selection in dimension reduction.
  
